@@ -15,6 +15,7 @@ const Header = () => {
   };
 
   return (
+    <div>
 <nav className="navbar navbar-expand-lg navbar-light bg-">
   <div className="container-fluid">
     <a className="navbar-brand" href="index.html"><img src={logo} className="w-25 rounded-3" alt="logo" /></a>
@@ -43,7 +44,7 @@ const Header = () => {
       <form className="d-flex">
         <input className="form-control me-2" type="search" list="pets" placeholder="Поиск" aria-label="Search" />
         <button className="btn btn-primary me-2" onclick>Поиск</button>
-        {/* Modal */}
+  
         <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="authModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
@@ -117,7 +118,7 @@ const Header = () => {
         </div></form>
     </div>
   </div></nav>
-
+  </div>
   );
 };
 

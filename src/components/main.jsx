@@ -1,5 +1,6 @@
 function Main() {
     return (
+        <div>
        <main style={{minHeight: '70vh'}}>
   <h2 className="text-center text-white bg-primary m-2">Найденные животные</h2>
   <div id="carouselExampleIndicators" className="carousel slide m-auto bg-success bg-opacity-25 w-100 p-2" data-bs-ride="carousel" style={{height: 500}}>
@@ -138,7 +139,7 @@ function Main() {
     <button type="submit" className="btn btn-primary">Подписаться</button>
   </form>
 </main>
-
+</div>
       );
 }
 
