@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import cat from '../png/кошка.jpg';
-import goat from '../png/коза.jpg';
+import goat from '../png/коза.jpeg';
 
 
 function FoundPets() {
@@ -30,10 +30,10 @@ function FoundPets() {
 
     return (
         <div>
-            <h2 className="text-white bg-primary m-2">Найденные животные</h2>
-            <div className="d-flex flex-row flex-wrap">
+            <h2 className="text-white bg-primary me-2 text-center">Найденные животные</h2>
+            <div className="d-flex flex-row flex-wrap container">
                 {pets.map((pet) => (
-                    <div key={pet.id} className="d-flex flex-row flex-wrap border m-3 p-3" style={{ minWidth: 300, width: '30%' }}>
+                    <div key={pet.id} className="d-flex flex-row flex-wrap border m-2 p-2" style={{ minWidth: 300, width: '30%' }}>
                         <img src={pet.img} className="w-75" alt="рисунок животного" />
                         <p className="w-50 text-primary" style={{ minWidth: 250 }}>id:</p>
                         <p className="w-50" style={{ minWidth: 250 }}>{pet.id}</p>

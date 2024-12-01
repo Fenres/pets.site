@@ -50,19 +50,20 @@ function MyAkc() {
             </div>
             <div className="container">
                 <p><strong>Имя:</strong> {userData.name}</p>
-                <p><strong>Телефон:</strong> {userData.phone}
-                    <button className="btn btn-primary me-2" onClick={updatePhone}>Изменить</button>
+                <p><strong>Телефон:</strong> {userData.phone}<strong>  </strong>
+                    <button className="btn btn-primary me-2 p-1" onClick={updatePhone}>Изменить </button>
                 </p>
-                <p><strong>Email:</strong> {userData.email}
-                    <button className="btn btn-primary me-2" onClick={updateEmail}>Изменить</button>
+                <p><strong>Email:</strong> {userData.email} <strong>  </strong>
+                    <button className="btn btn-primary me-2 p-1" onClick={updateEmail}>Изменить </button>
                 </p>
                 <p><strong>Дата регистрации:</strong> {userData.registrationDate}</p>
                 <p><strong>Дней на сайте:</strong> {userData.daysOnSite}</p>
                 <p><strong>Количество объявлений:</strong> {userData.adsCount}</p>
-                <p><strong>Найденных животных:</strong> {userData.foundPets}</p>
+                <p><strong>Найденных животных:</strong> {userData.foundPets}</p> 
+                <button id="logoutButton" className="btn btn-danger " onClick={handleLogout}>Выйти</button>
             </div>
-            {/* Кнопка "Выйти" */}
-            <button id="logoutButton" className="btn btn-danger" onClick={handleLogout}>Выйти</button>
+            <br></br>
+           
         </div>
     );
 }

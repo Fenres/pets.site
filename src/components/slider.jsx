@@ -5,13 +5,12 @@ import gorillaImage from '../png/горилла.jpg';
 
 function Slider() {
     return (
-        <main style={{ minHeight: '70vh' }}>
+        <main className='w-100' style={{ overflow: 'hidden' }}>
             <h2 className="text-center text-white bg-primary m-2">Найденные животные</h2>
             <div
                 id="carouselExampleIndicators"
-                className="carousel slide m-auto bg-success bg-opacity-25 w-100 p-2"
+                className="carousel slide bg-success bg-opacity-25 w-100 p-2"
                 data-bs-ride="carousel"
-                style={{ height: 500 }}
             >
                 <div className="carousel-indicators">
                     <button
@@ -35,33 +34,33 @@ function Slider() {
                         aria-label="Slide 3"
                     />
                 </div>
-                <div className="carousel-inner text-center">
-                    <div className="carousel-item active">
+                <div className="carousel-inner text-center d-flex align-items-center" style={{ height: '600px' }}>
+                    <div className="carousel-item active w-100">
                         <img
                             src={dogImage}
-                            className="d-block h-50 mx-auto"
+                            className="d-block mx-auto"
                             alt="Собака"
-                            style={{ width: 400 }}
+                            style={{ maxWidth: '100%', height: '50vh', objectFit: 'contain' }}
                         />
                         <h2 className="text-center">Найдена собака</h2>
                         <p>Собака рыжая, была утеряна в Красногвардейском районе</p>
                     </div>
-                    <div className="carousel-item">
+                    <div className="carousel-item w-100">
                         <img
                             src={mouseImage}
-                            className="d-block h-50 mx-auto"
+                            className="d-block mx-auto"
                             alt="Мышь"
-                            style={{ width: 400 }}
+                            style={{ maxWidth: '100%', height: '50vh', objectFit: 'contain' }}
                         />
                         <h2 className="text-center">Найдена мышь</h2>
                         <p>Мышь серая, была утеряна в центральном районе</p>
                     </div>
-                    <div className="carousel-item">
+                    <div className="carousel-item w-100">
                         <img
                             src={gorillaImage}
-                            className="d-block h-50 mx-auto"
+                            className="d-block mx-auto"
                             alt="Горилла"
-                            style={{ width: 400 }}
+                            style={{ maxWidth: '100%', height: '50vh', objectFit: 'contain' }}
                         />
                         <h2 className="text-center">Найдена горилла</h2>
                         <p>Горилла, была утеряна в Красногвардейском районе</p>

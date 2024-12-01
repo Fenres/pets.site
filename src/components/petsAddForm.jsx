@@ -46,7 +46,7 @@ function PetsAddForm() {
             <input type="checkbox" className="form-check-input" id="confirm" required />
             <label className="form-check-label" htmlFor="confirm">Согласие на обработку данных</label>
           </div>
-          <button type="submit" className="btn btn-primary">Добавить</button>
+          <button type="submit" className="btn btn-primary ">Добавить</button>
           <div id="addPetMessage" />
         </form>
         <button type="button" className="btn btn-primary mt-2 mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">

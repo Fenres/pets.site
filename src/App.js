@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
+import { Routes, Route } from "react-router-dom"; // Do not import Router here
 
 import Footer from "./components/footer";
 import Header from "./components/header";
@@ -9,9 +9,9 @@ import PetsSearch from "./pages/petsSearch";
 
 function App() {
   return (
-    <Router>
+    <div className="w-100">
       <Header />
-      <div className="container mt-4">
+      <div >
         <Routes> 
           <Route path="/" element={<MainPage />} />
           <Route path="/myAccount" element={<MyAccount />} />
@@ -20,7 +20,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
-    </Router>
+    </div>
   );
 }
 

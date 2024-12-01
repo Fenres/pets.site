@@ -1,6 +1,7 @@
 import React from 'react';
+
 import cat from '../png/кошка.jpg';
-import goat from '../png/коза.jpg';
+import goat from '../png/коза.jpeg';
 import dog1 from '../png/собака1.jpg';
 import hamster from '../png/хомяк.jpg';
 import parrot from '../png/попугай.jpg';
@@ -14,7 +15,7 @@ const animals = [
         chip: 'ca-001-spb',
         district: 'Василиостровский',
         date: '24-03-2020',
-        img: cat
+        src: cat
     },
     {
         id: 18,
@@ -23,7 +24,7 @@ const animals = [
         chip: 'go-011-spb',
         district: 'Центральный',
         date: '14-03-2022',
-        img: goat
+        src: goat
     },
     {
         id: 22,
@@ -32,7 +33,7 @@ const animals = [
         chip: 'dog-123-msk',
         district: 'Московский',
         date: '01-04-2023',
-        img: dog1
+        src: dog1
     },
     {
         id: 25,
@@ -41,7 +42,7 @@ const animals = [
         chip: '(нет)',
         district: 'Фрунзенский',
         date: '10-05-2023',
-        img: hamster
+        src: hamster
     },
     {
         id: 28,
@@ -50,7 +51,7 @@ const animals = [
         chip: '(нет)',
         district: 'Адмиралтейский',
         date: '20-06-2023',
-        img: parrot
+        src: parrot
     },
     {
         id: 31,
@@ -59,7 +60,7 @@ const animals = [
         chip: '(нет)',
         district: 'Выборгский',
         date: '25-07-2023',
-        img: rat
+        src: rat
     }
 ];
 
@@ -70,7 +71,8 @@ function CardPats() {
             <div className="d-flex flex-wrap justify-content-center">
                 {animals.map(animal => (
                     <div key={animal.id} className="border m-3 p-3" style={{ minWidth: 300, width: '30%' }}>
-                        <img src={animal.img} className="w-75 mx-auto" alt={`рисунок ${animal.type}`} />
+                        {/* Изменено на animal.src */}
+                        <img src={animal.src} className="w-75 mx-auto" alt={`рисунок ${animal.type}`} />
                         <p className="text-primary">id:</p>
                         <p>{animal.id}</p>
                         <p className="text-primary">Вид животного:</p>
@@ -86,19 +88,7 @@ function CardPats() {
                     </div>
                 ))}
             </div>
-            <nav aria-label="pagination" className="m-auto">
-                <ul className="pagination pagination-lg justify-content-center">
-                    <li className="page-item active" aria-current="page">
-                        <span className="page-link">1</span>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#">2</a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#">3</a>
-                    </li>
-                </ul>
-            </nav>
+           
         </div>
     );
 }
