@@ -1,5 +1,9 @@
+import PetsAddForm from "../components/petsAddForm";
+
 function PetsAdd() {
-    return (  );
+    return (
+        <PetsAddForm />
+      );
 }
 
 export default PetsAdd;
