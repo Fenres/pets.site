@@ -5,7 +5,7 @@ function MyAccount() {
     return ( 
         <div>
             <MyAkc />
-            <FoundPets />
+          
         </div>
      );
 }

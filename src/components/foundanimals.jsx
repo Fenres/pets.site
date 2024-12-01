@@ -14,7 +14,7 @@ function FoundPets() {
             chipNumber: 'ca-001-spb',
             district: 'Василиостровский',
             date: '24-03-2020',
-            img: cat
+            src: cat
         },
         {
             id: 18,
@@ -23,7 +23,7 @@ function FoundPets() {
             chipNumber: 'go-011-spb',
             district: 'Центральный',
             date: '14-03-2022',
-            img: goat
+            src: goat
         }
         // Добавьте другие объекты животных при необходимости
     ]);
@@ -32,21 +32,17 @@ function FoundPets() {
         <div>
             <h2 className="text-white bg-primary me-2 text-center">Найденные животные</h2>
             <div className="d-flex flex-row flex-wrap container">
-                {pets.map((pet) => (
-                    <div key={pet.id} className="d-flex flex-row flex-wrap border m-2 p-2" style={{ minWidth: 300, width: '30%' }}>
-                        <img src={pet.img} className="w-75" alt="рисунок животного" />
-                        <p className="w-50 text-primary" style={{ minWidth: 250 }}>id:</p>
-                        <p className="w-50" style={{ minWidth: 250 }}>{pet.id}</p>
-                        <p className="w-50 text-primary" style={{ minWidth: 250 }}>Вид животного:</p>
-                        <p className="w-50" style={{ minWidth: 250 }}>{pet.type}</p>
-                        <p className="w-50 text-primary" style={{ minWidth: 300 }}>Описание:</p>
-                        <p className="w-50" style={{ minWidth: 300 }}>{pet.description}</p>
-                        <p className="w-50 text-primary" style={{ minWidth: 300 }}>Номер чипа:</p>
-                        <p className="w-50" style={{ minWidth: 300 }}>{pet.chipNumber}</p>
-                        <p className="w-50 text-primary" style={{ minWidth: 300 }}>Район:</p>
-                        <p className="w-50" style={{ minWidth: 300 }}>{pet.district}</p>
-                        <p className="w-50 text-primary" style={{ minWidth: 300 }}>Дата:</p>
-                        <p className="w-50" style={{ minWidth: 300 }}>{pet.date}</p>
+            {pets.map(pet => (
+                    <div key={pet.id} className="border card m-3" style={{ minWidth: 300, width: '30%' }}>
+                        <img src={pet.src} className="card-img-top" alt={`рисунок ${pet.type}`} style={{ height: '60%', objectFit: 'cover' }} />
+                        <div className="card-body">
+                            <h5 className="card-title">{pet.type}</h5>
+                            <p className="card-text"><strong>ID:</strong> {pet.id}</p>
+                            <p className="card-text"><strong>Описание:</strong> {pet.description}</p>
+                            <p className="card-text"><strong>Номер чипа:</strong> {pet.chip}</p>
+                            <p className="card-text"><strong>Район:</strong> {pet.district}</p>
+                            <p className="card-text"><strong>Дата:</strong> {pet.date}</p>
+                        </div>
                     </div>
                 ))}
             </div>

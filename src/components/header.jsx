@@ -1,27 +1,43 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap'; 
-
 import logo from '../png/logo.jpg';
 
 const Header = () => {
-  const [show, setShow] = useState(false); 
   const [showModal, setShowModal] = useState(false);
   const [isLoginTabActive, setIsLoginTabActive] = useState(true);
   
   const location = useLocation();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // Login Form state
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  // Register Form state
+  const [registerName, setRegisterName] = useState("");
+  const [registerPhone, setRegisterPhone] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
 
   const isActive = (path) => location.pathname === path;
 
+  // Handle opening and closing the modal
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
+  // Handle tab switch between login and registration
+  const handleTabSwitch = (isLogin) => setIsLoginTabActive(isLogin);
+
+  // Form submission handlers
   const handleLoginSubmit = (e) => {
     e.preventDefault();
+    console.log("Login email:", loginEmail, "Password:", loginPassword);
   };
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
+    console.log("Register info:", registerName, registerPhone, registerEmail);
   };
 
   const handleSearch = (e) => {
@@ -77,15 +93,12 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-            <button
-              type="button"
-              className="btn btn-primary me-2"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
+            <Button className="btn btn-primary me-2  mb-2 mb-lg-0" onClick={handleShowModal}>
               Вход / Регистрация
-            </button>
-            <form className="d-flex" onSubmit={handleSearch}>
+            </Button>
+
+            {/* Search Bar */}
+            <form className="d-flex  mb-2 mb-lg-0 " onSubmit={handleSearch}>
               <input
                 className="form-control me-2"
                 type="search"
@@ -94,215 +107,116 @@ const Header = () => {
                 aria-label="Search"
               />
               <button className="btn btn-primary me-2">Поиск</button>
-
-              <div
-                className="modal fade"
-                id="exampleModal"
-                tabIndex={-1}
-                aria-labelledby="authModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h1 className="modal-title fs-5" id="authModalLabel">
-                        Авторизация
-                      </h1>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      />
-                    </div>
-                    <div className="modal-body">
-                      <ul className="nav nav-tabs" id="authTabs" role="tablist">
-                        <li className="nav-item" role="presentation">
-                          <button
-                            className="nav-link active"
-                            id="login-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#login"
-                            type="button"
-                            role="tab"
-                            aria-controls="login"
-                            aria-selected="true"
-                          >
-                            Вход
-                          </button>
-                        </li>
-                        <li className="nav-item" role="presentation">
-                          <button
-                            className="nav-link"
-                            id="register-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#register"
-                            type="button"
-                            role="tab"
-                            aria-controls="register"
-                            aria-selected="false"
-                          >
-                            Регистрация
-                          </button>
-                        </li>
-                      </ul>
-                      <div className="tab-content" id="authTabContent">
-                        <div
-                          className="tab-pane fade show active"
-                          id="login"
-                          role="tabpanel"
-                          aria-labelledby="login-tab"
-                        >
-                          {/* Login form fields */}
-                          <form onSubmit={handleLoginSubmit}>
-                            <div className="mb-3">
-                              <label htmlFor="loginEmail" className="form-label">
-                                Email
-                              </label>
-                              <input
-                                type="email"
-                                className="form-control"
-                                id="loginEmail"
-                                required
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="loginPassword"
-                                className="form-label"
-                              >
-                                Пароль
-                              </label>
-                              <input
-                                type="password"
-                                className="form-control"
-                                id="loginPassword"
-                                required
-                              />
-                            </div>
-                            <button
-                              type="submit"
-                              className="btn btn-primary w-100"
-                            >
-                              Войти
-                            </button>
-                          </form>
-                        </div>
-                        <div
-                          className="tab-pane fade"
-                          id="register"
-                          role="tabpanel"
-                          aria-labelledby="register-tab"
-                        >
-                          <form onSubmit={handleRegisterSubmit}>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="registerName"
-                                className="form-label"
-                              >
-                                Имя
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="registerName"
-                                required
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="registerPhone"
-                                className="form-label"
-                              >
-                                Телефон
-                              </label>
-                              <input
-                                type="tel"
-                                className="form-control"
-                                id="registerPhone"
-                                required
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="registerEmail"
-                                className="form-label"
-                              >
-                                Email
-                              </label>
-                              <input
-                                type="email"
-                                className="form-control"
-                                id="registerEmail"
-                                required
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="registerPassword"
-                                className="form-label"
-                              >
-                                Пароль
-                              </label>
-                              <input
-                                type="password"
-                                className="form-control"
-                                id="registerPassword"
-                                required
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="registerPasswordConfirm"
-                                className="form-label"
-                              >
-                                Подтверждение пароля
-                              </label>
-                              <input
-                                type="password"
-                                className="form-control"
-                                id="registerPasswordConfirm"
-                                required
-                              />
-                            </div>
-                            <div className="mb-3 form-check">
-                              <input
-                                type="checkbox"
-                                className="form-check-input"
-                                id="registerConfirm"
-                                required
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="registerConfirm"
-                              >
-                                Согласие на обработку данных
-                              </label>
-                            </div>
-                            <button
-                              type="submit"
-                              className="btn btn-primary w-100"
-                            >
-                              Зарегистрироваться
-                            </button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <datalist id="pets">
-                  <option value="Кошка" />
-                  <option value="Собака" />
-                  <option value="Корова" />
-                  <option value="Крокодил" />
-                  <option value="Сова" />
-                </datalist>
-              </div>
             </form>
           </div>
         </div>
       </nav>
+
+ 
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Авторизация</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ul className="nav nav-tabs" id="authTabs" role="tablist">
+            <li className="nav-item">
+              <button
+                className={`nav-link ${isLoginTabActive ? 'active' : ''}`}
+                onClick={() => handleTabSwitch(true)}
+              >
+                Вход
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${!isLoginTabActive ? 'active' : ''}`}
+                onClick={() => handleTabSwitch(false)}
+              >
+                Регистрация
+              </button>
+            </li>
+          </ul>
+          <div className="tab-content mt-3">
+            {isLoginTabActive ? (
+              <form onSubmit={handleLoginSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Пароль</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Button type="submit" className="w-100">Войти</Button>
+              </form>
+            ) : (
+              <form onSubmit={handleRegisterSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Имя</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={registerName}
+                    onChange={(e) => setRegisterName(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Телефон</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    value={registerPhone}
+                    onChange={(e) => setRegisterPhone(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={registerEmail}
+                    onChange={(e) => setRegisterEmail(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Пароль</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={registerPassword}
+                    onChange={(e) => setRegisterPassword(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Подтверждение пароля</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={registerPasswordConfirm}
+                    onChange={(e) => setRegisterPasswordConfirm(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Check
+                  type="checkbox"
+                  label="Согласие на обработку данных"
+                  required
+                />
+                <Button type="submit" className="w-100">Зарегистрироваться</Button>
+              </form>
+            )}
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
