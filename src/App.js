@@ -1,13 +1,25 @@
+import {Routes, Route} from "react-router-dom"
+
+import Footer from "./components/footer";
 import Header from "./components/header";
-import Main from "./components/main";
+import MainPage from "./pages/MainPage";
+
 
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-      <Main />
+    <Router>
+      <Header />
+      <div className="container mt-4">
+        <Route>
+          <Route path = {'/'} element = {<MainPage />}></Route>
+
+
+        </Route>   
     </div>
+      <Footer />
+    </Router>
+    
   );
 }
 
