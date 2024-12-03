@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"; // Do not import Router here
+import { Routes, Route } from "react-router-dom"; 
 
 import Footer from "./components/footer";
 import Header from "./components/header";
