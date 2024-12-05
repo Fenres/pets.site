@@ -6,6 +6,7 @@ function MainPage() {
     return (
         <div className="w-100">
             <Slider />
+            <h2 className="text-center text-white bg-primary m-2">Карточки найденных животных</h2>
             <CardPats />
             <News />
         </div>

@@ -3,21 +3,22 @@ import React from "react";
 const AdDetails = ({ selectedAd, closeAd }) => {
   return (
     <div>
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '70vh' }}>
-        <div className="card-details d-flex flex-wrap align-items-center border p-2" style={{ width: '90%', height: '500px' }}>
-          <div className="image-container" style={{ maxWidth: '100%' }}>
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '40vh' }}>
+        <div className="card-details d-flex flex-wrap align-items-center border p-2" style={{ width: '90%', maxWidth: '900px', height: 'auto' }}>
+          <div className="image-container" style={{ width: '100%', maxWidth: '600px' }}>
             <img
               src={selectedAd.src}
               alt={`рисунок ${selectedAd.type}`}
               style={{
-                height: '400px',
-                width: '600px',
-                objectFit: 'cover'
+                height: 'auto',
+                width: '100%',
+                objectFit: 'cover',
+                maxHeight: '400px',
               }}
               className="animal-image"
             />
           </div>
-          <div className="text-container ms-4" style={{ maxWidth: '100%' }}>
+          <div className="text-container ms-4 mt-4 mt-md-0" style={{ flex: '1 1 auto' }}>
             <h5>{selectedAd.type}</h5>
             <p><strong>ID:</strong> {selectedAd.id}</p>
             <p><strong>Описание:</strong> {selectedAd.description}</p>

@@ -101,7 +101,7 @@ function CardPats() {
             ) : (
                 <>
                     <div>
-                        <h2 className="text-center text-white bg-primary m-2">Карточки найденных животных</h2>
+                        
                         <div className="d-flex flex-wrap justify-content-center">
                             {currentCards.map(pet => (
                                 <Card key={pet.id} pet={pet} onClick={openAnimalCard} />
