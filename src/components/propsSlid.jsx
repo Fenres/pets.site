@@ -1,5 +1,6 @@
 import React from 'react';
-import './sliderCss.css'
+import './sliderCss.css';
+
 function Slider({ slides }) {
     return (
         <main className="w-100" style={{ overflow: 'hidden' }}>

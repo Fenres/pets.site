@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap'; 
+import axios from 'axios';
 import logo from '../png/logo.jpg';
 
 const Header = () => {
@@ -9,39 +10,53 @@ const Header = () => {
   
   const location = useLocation();
 
-  // Login Form state
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  // Search state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
-  // Register Form state
-  const [registerName, setRegisterName] = useState("");
-  const [registerPhone, setRegisterPhone] = useState("");
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
-
-  const isActive = (path) => location.pathname === path;
-
-  // Handle opening and closing the modal
-  const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = () => setShowModal(true);
-
-  // Handle tab switch between login and registration
-  const handleTabSwitch = (isLogin) => setIsLoginTabActive(isLogin);
-
-  // Form submission handlers
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login email:", loginEmail, "Password:", loginPassword);
+  // Debounce function
+  const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => func.apply(this, args), delay);
+    };
   };
 
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    console.log("Register info:", registerName, registerPhone, registerEmail);
+  // Fetch suggestions from server
+  const fetchSuggestions = async (query) => {
+    if (query.length < 3) return;
+    setIsSearching(true);
+    try {
+      const response = await axios.get(`https://pets.сделай.site/api/search`, {
+        params: { query }
+      });
+      if (response.status === 200) {
+        setSuggestions(response.data.orders);
+      } else {
+        setSuggestions([]);
+      }
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+      setSuggestions([]);
+    } finally {
+      setIsSearching(false);
+    }
   };
+
+  // Handle search input change with debounce
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    debounceFetchSuggestions(e.target.value);
+  };
+
+  // Debounced function
+  const debounceFetchSuggestions = useCallback(debounce(fetchSuggestions, 1000), []);
 
   const handleSearch = (e) => {
     e.preventDefault();
+    // Trigger search logic here
   };
 
   return (
@@ -51,172 +66,58 @@ const Header = () => {
           <Link to="/" className="navbar-brand">
             <img src={logo} className="w-25 rounded-3" alt="logo" />
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav m-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link
-                  to="/"
-                  className={`nav-link ${isActive('/') ? 'disabled' : ''}`} aria-current="page">
+                <Link to="/" className={`nav-link ${location.pathname === '/' ? 'disabled' : ''}`}>
                   Главная
                 </Link>
               </li>
               <li className="nav-item">
-              <Link
-                  to="/myAccount"
-                  className={`nav-link ${isActive('/myAccount') ? 'disabled' : ''}`} >
+                <Link to="/myAccount" className={`nav-link ${location.pathname === '/myAccount' ? 'disabled' : ''}`}>
                   Личный кабинет
                 </Link>
               </li>
               <li className="nav-item">
-              <Link
-                  to="/petsAdd"
-                  className={`nav-link ${isActive('/petsAdd') ? 'disabled' : ''}`} >
+                <Link to="/petsAdd" className={`nav-link ${location.pathname === '/petsAdd' ? 'disabled' : ''}`}>
                   Добавить объявление
                 </Link>
               </li>
               <li className="nav-item">
-              <Link
-                  to="/petsSearch"
-                  className={`nav-link ${isActive('/petsSearch') ? 'disabled' : ''}`} >
+                <Link to="/petsSearch" className={`nav-link ${location.pathname === '/petsSearch' ? 'disabled' : ''}`}>
                   Поиск по объявлениям
                 </Link>
               </li>
             </ul>
-            <Button className="btn btn-primary me-2  mb-2 mb-lg-0" onClick={handleShowModal}>
-              Вход / Регистрация
-            </Button>
 
             {/* Search Bar */}
-            <form className="d-flex  mb-2 mb-lg-0 " onSubmit={handleSearch}>
+            <form className="d-flex mb-2 mb-lg-0" onSubmit={handleSearch}>
               <input
                 className="form-control me-2"
                 type="search"
-                list="pets"
                 placeholder="Поиск"
+                value={searchQuery}
+                onChange={handleSearchChange}
                 aria-label="Search"
               />
-              <button className="btn btn-primary me-2">Поиск</button>
+              <button className="btn btn-primary">Поиск</button>
             </form>
           </div>
         </div>
       </nav>
 
- 
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Авторизация</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <ul className="nav nav-tabs" id="authTabs" role="tablist">
-            <li className="nav-item">
-              <button
-                className={`nav-link ${isLoginTabActive ? 'active' : ''}`}
-                onClick={() => handleTabSwitch(true)}
-              >
-                Вход
-              </button>
+      {/* Suggestions Dropdown */}
+      {searchQuery.length >= 3 && suggestions.length > 0 && (
+        <ul className="list-group position-absolute" style={{ zIndex: 1000 }}>
+          {suggestions.map((item) => (
+            <li key={item.id} className="list-group-item">
+              <Link to={`/order/${item.id}`}>
+                {item.description} - {item.district}
+              </Link>
             </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${!isLoginTabActive ? 'active' : ''}`}
-                onClick={() => handleTabSwitch(false)}
-              >
-                Регистрация
-              </button>
-            </li>
-          </ul>
-          <div className="tab-content mt-3">
-            {isLoginTabActive ? (
-              <form onSubmit={handleLoginSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Пароль</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Button type="submit" className="w-100">Войти</Button>
-              </form>
-            ) : (
-              <form onSubmit={handleRegisterSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Имя</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={registerName}
-                    onChange={(e) => setRegisterName(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Телефон</Form.Label>
-                  <Form.Control
-                    type="tel"
-                    value={registerPhone}
-                    onChange={(e) => setRegisterPhone(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={registerEmail}
-                    onChange={(e) => setRegisterEmail(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Пароль</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={registerPassword}
-                    onChange={(e) => setRegisterPassword(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Подтверждение пароля</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={registerPasswordConfirm}
-                    onChange={(e) => setRegisterPasswordConfirm(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Check
-                  type="checkbox"
-                  label="Согласие на обработку данных"
-                  required
-                />
-                <Button type="submit" className="w-100">Зарегистрироваться</Button>
-              </form>
-            )}
-          </div>
-        </Modal.Body>
-      </Modal>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
